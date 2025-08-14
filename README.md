@@ -45,7 +45,11 @@ sudo apt install ros-humble-slam-toolbox \
                  ros-humble-pointcloud-to-laserscan \
                  ros-humble-controller-manager \
                  ros-humble-joint-state-broadcaster \
-                 ros-humble-mecanum-drive-controller
+                 ros-humble-mecanum-drive-controller \
+                 ros-humble-gazebo-ros-pkgs \
+                 ros-humble-gazebo-ros2-control \
+                 ros-humble-ros2-control \
+                 ros-humble-ros2-controllers
 
 # Clone and build workspace
 git clone <repository-url> ros2-humble-navstack-vstone-x40a

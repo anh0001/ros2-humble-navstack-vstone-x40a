@@ -1,0 +1,25 @@
+# Vstone 4WDS Rover X40A parameters
+vstone_base_driver:
+  ros__parameters:
+    # Hardware connection
+    port: "/dev/ttyACM0"  # USB port for VS-WRC058 controller
+    baud_rate: 115200
+    
+    # Robot physical parameters
+    wheel_base: 0.4       # Distance between front and rear axles (m)
+    wheel_track: 0.5      # Distance between left and right wheels (m)
+    wheel_radius: 0.075   # Wheel radius (m)
+    max_linear_velocity: 1.0   # Maximum linear velocity (m/s)
+    max_angular_velocity: 1.0  # Maximum angular velocity (rad/s)
+    
+    # Publishing frequencies
+    odom_publish_rate: 50.0    # Odometry publishing rate (Hz)
+    cmd_timeout: 0.5           # Command timeout (s)
+    
+    # Frame IDs
+    base_frame_id: "base_link"
+    odom_frame_id: "odom"
+    
+    # Odometry covariance
+    odom_linear_covariance: 0.01   # Linear position covariance
+    odom_angular_covariance: 0.01  # Angular position covariance

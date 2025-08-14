@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<robot name="rover_x40a" xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <!-- Robot Parameters -->
+  <xacro:property name="base_width" value="0.5"/>
+  <xacro:property name="base_length" value="0.4"/>
+  <xacro:property name="base_height" value="0.2"/>
+  <xacro:property name="wheel_radius" value="0.075"/>
+  <xacro:property name="lidar_height" value="0.2"/>
+  
+  <!-- Base Link -->
+  <link name="base_link">
+    <inertial>
+      <mass value="40.0"/>
+      <origin xyz="0 0 0.1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.1"/>
+      <geometry>
+        <box size="${base_length} ${base_width} ${base_height}"/>
+      </geometry>
+      <material name="grey">
+        <color rgba="0.6 0.6 0.6 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.1"/>
+      <geometry>
+        <box size="${base_length} ${base_width} ${base_height}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Livox MID-360 LiDAR -->
+  <link name="livox_frame">
+    <visual>
+      <geometry>
+        <cylinder length="0.1" radius="0.05"/>
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.1" radius="0.05"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="lidar_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="livox_frame"/>
+    <origin xyz="0 0 ${lidar_height}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Four wheels for 4WDS -->
+  <xacro:macro name="wheel" params="prefix x y">
+    <link name="${prefix}_wheel">
+      <visual>
+        <geometry>
+          <cylinder length="0.05" radius="${wheel_radius}"/>
+        </geometry>
+        <material name="black"/>
+      </visual>
+    </link>
+    <joint name="${prefix}_wheel_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="${prefix}_wheel"/>
+      <origin xyz="${x} ${y} 0" rpy="1.57 0 0"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:wheel prefix="front_left" x="0.2" y="0.25"/>
+  <xacro:wheel prefix="front_right" x="0.2" y="-0.25"/>
+  <xacro:wheel prefix="rear_left" x="-0.2" y="0.25"/>
+  <xacro:wheel prefix="rear_right" x="-0.2" y="-0.25"/>
+
+  <!-- Import Gazebo simulation elements -->
+  <xacro:include filename="$(find rover_description)/urdf/rover_x40a.gazebo.xacro"/>
+
+</robot>

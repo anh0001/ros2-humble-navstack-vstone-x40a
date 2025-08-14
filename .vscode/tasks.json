@@ -1,0 +1,122 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "RViz: Robot Model Display",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "source install/setup.bash && DISPLAY=:77 ros2 launch mecanumrover_description display.launch.py"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "detail": "Launch RViz with robot model visualization on display :77"
+        },
+        {
+            "label": "RViz: Navigation with SLAM",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "source install/setup.bash && DISPLAY=:77 rviz2 -d rviz/navigation.rviz"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "detail": "Launch RViz with navigation configuration on display :77"
+        },
+        {
+            "label": "RViz: Robot Model (Hardware)",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "source install/setup.bash && DISPLAY=:77 ros2 launch rover_description robot_state_publisher.launch.py && rviz2 -d rviz/navigation.rviz"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "detail": "Launch robot state publisher and RViz for hardware mode on display :77"
+        },
+        {
+            "label": "RViz: Simulation Mode",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "source install/setup.bash && DISPLAY=:77 rviz2 -d rviz/navigation.rviz --ros-args -p use_sim_time:=true"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "detail": "Launch RViz for simulation mode with sim time on display :77"
+        },
+        {
+            "label": "Build Workspace",
+            "type": "shell",
+            "command": "colcon",
+            "args": ["build", "--symlink-install"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "detail": "Build the entire ROS 2 workspace"
+        },
+        {
+            "label": "Clean Build Workspace",
+            "type": "shell",
+            "command": "colcon",
+            "args": ["build", "--symlink-install", "--cmake-clean-cache"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "detail": "Clean build the entire ROS 2 workspace"
+        }
+    ]
+}

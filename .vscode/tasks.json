@@ -4,82 +4,20 @@
         {
             "label": "RViz: Robot Model Display",
             "type": "shell",
-            "command": "bash",
-            "args": [
-                "-c",
-                "source install/setup.bash && DISPLAY=:77 ros2 launch mecanumrover_description display.launch.py"
-            ],
-            "group": "build",
+            "command": "DISPLAY=:77 XAUTHORITY=$HOME/.Xauthority xterm -hold -e \"source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 launch mecanumrover_description display.launch.py > eval.log 2>&1\" &",
             "presentation": {
                 "echo": true,
-                "reveal": "always",
+                "reveal": "never",
                 "focus": false,
-                "panel": "new"
+                "panel": "shared"
             },
             "options": {
-                "cwd": "${workspaceFolder}"
+                "shell": {
+                    "executable": "/bin/bash",
+                    "args": ["-ic"]
+                }
             },
-            "detail": "Launch RViz with robot model visualization on display :77"
-        },
-        {
-            "label": "RViz: Navigation with SLAM",
-            "type": "shell",
-            "command": "bash",
-            "args": [
-                "-c",
-                "source install/setup.bash && DISPLAY=:77 rviz2 -d rviz/navigation.rviz"
-            ],
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "new"
-            },
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "detail": "Launch RViz with navigation configuration on display :77"
-        },
-        {
-            "label": "RViz: Robot Model (Hardware)",
-            "type": "shell",
-            "command": "bash",
-            "args": [
-                "-c",
-                "source install/setup.bash && DISPLAY=:77 ros2 launch rover_description robot_state_publisher.launch.py && rviz2 -d rviz/navigation.rviz"
-            ],
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "new"
-            },
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "detail": "Launch robot state publisher and RViz for hardware mode on display :77"
-        },
-        {
-            "label": "RViz: Simulation Mode",
-            "type": "shell",
-            "command": "bash",
-            "args": [
-                "-c",
-                "source install/setup.bash && DISPLAY=:77 rviz2 -d rviz/navigation.rviz --ros-args -p use_sim_time:=true"
-            ],
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "new"
-            },
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "detail": "Launch RViz for simulation mode with sim time on display :77"
+            "problemMatcher": []
         },
         {
             "label": "Build Workspace",

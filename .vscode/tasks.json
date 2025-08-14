@@ -4,7 +4,7 @@
         {
             "label": "RViz: Robot Model Display",
             "type": "shell",
-            "command": "DISPLAY=:77 XAUTHORITY=$HOME/.Xauthority xterm -hold -e \"source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 launch rover_description robot_state_publisher.launch.py > eval.log 2>&1\" &",
+            "command": "DISPLAY=:77 XAUTHORITY=$HOME/.Xauthority xterm -hold -e \"source install/setup.bash && ros2 launch rover_description robot_state_publisher.launch.py > eval.log 2>&1\" &",
             "presentation": {
                 "echo": true,
                 "reveal": "never",
@@ -22,8 +22,8 @@
         {
             "label": "Build Workspace",
             "type": "shell",
-            "command": "colcon",
-            "args": ["build", "--symlink-install"],
+            "command": "bash",
+            "args": ["-c", "source /opt/ros/humble/setup.bash && colcon build --symlink-install"],
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -42,8 +42,8 @@
         {
             "label": "Clean Build Workspace",
             "type": "shell",
-            "command": "colcon",
-            "args": ["build", "--symlink-install", "--cmake-clean-cache"],
+            "command": "bash",
+            "args": ["-c", "source /opt/ros/humble/setup.bash && colcon build --symlink-install --cmake-clean-cache"],
             "group": "build",
             "presentation": {
                 "echo": true,

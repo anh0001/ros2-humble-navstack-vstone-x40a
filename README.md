@@ -32,8 +32,15 @@ This repository provides a complete ROS 2 Humble navigation stack for the Vstone
 sudo apt update
 sudo apt install ros-humble-desktop ros-humble-nav2-bringup
 
+# Install Gazebo Classic
+sudo apt update
+sudo apt install \
+  gazebo \
+  ros-humble-gazebo-ros-pkgs \
+  ros-humble-gazebo-plugins
+
 # Install additional dependencies
-sudo apt install ros-humble-slam-toolbox ros-humble-gazebo-ros-pkgs \
+sudo apt install ros-humble-slam-toolbox \
                  ros-humble-robot-localization ros-humble-pointcloud-to-laserscan
 
 # Clone and build workspace

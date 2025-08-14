@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<robot name="rover_x40a" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Include the official Vstone mecanum rover description -->
+  <xacro:include filename="$(find mecanumrover_description)/urdf/mecanum3.xacro" />
+  
+  <!-- Add LiDAR sensor for navigation -->
+  <link name="lidar_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.07"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.07"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+  </link>
+
+  <!-- Attach LiDAR to the base_link -->
+  <joint name="lidar_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_link"/>
+    <origin xyz="0.1 0 0.2" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Gazebo plugins for simulation -->
+  <gazebo>
+    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+      <robot_param>robot_description</robot_param>
+      <robot_param_node>robot_state_publisher</robot_param_node>
+      <parameters>$(find rover_description)/config/ros2_controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+  <!-- Gazebo LiDAR sensor -->
+  <gazebo reference="lidar_link">
+    <sensor type="ray" name="livox_lidar">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.141592</min_angle>
+            <max_angle>3.141592</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>16</samples>
+            <resolution>1</resolution>
+            <min_angle>-0.261799</min_angle>
+            <max_angle>0.261799</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.1</min>
+          <max>15.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_ray_sensor" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <remapping>~/out:=points</remapping>
+        </ros>
+        <output_type>sensor_msgs/PointCloud2</output_type>
+        <frame_name>lidar_link</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- ROS 2 control interface -->
+  <ros2_control name="RoverSystem" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+    
+    <!-- Front left wheel -->
+    <joint name="front_left_joint">
+      <command_interface name="velocity">
+        <param name="min">-10</param>
+        <param name="max">10</param>
+      </command_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="position"/>
+    </joint>
+    
+    <!-- Front right wheel -->
+    <joint name="front_right_joint">
+      <command_interface name="velocity">
+        <param name="min">-10</param>
+        <param name="max">10</param>
+      </command_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="position"/>
+    </joint>
+    
+    <!-- Back left wheel -->
+    <joint name="back_left_joint">
+      <command_interface name="velocity">
+        <param name="min">-10</param>
+        <param name="max">10</param>
+      </command_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="position"/>
+    </joint>
+    
+    <!-- Back right wheel -->
+    <joint name="back_right_joint">
+      <command_interface name="velocity">
+        <param name="min">-10</param>
+        <param name="max">10</param>
+      </command_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="position"/>
+    </joint>
+  </ros2_control>
+
+</robot>

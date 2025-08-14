@@ -55,6 +55,24 @@
                 "cwd": "${workspaceFolder}"
             },
             "detail": "Clean build the entire ROS 2 workspace"
+        },
+        {
+            "label": "Gazebo: Simulation Launch",
+            "type": "shell",
+            "command": "DISPLAY=:77 XAUTHORITY=$HOME/.Xauthority xterm -hold -e \"source install/setup.bash && ros2 launch rover_gazebo gazebo_sim.launch.py > eval.log 2>&1\" &",
+            "presentation": {
+                "echo": true,
+                "reveal": "never",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "shell": {
+                    "executable": "/bin/bash",
+                    "args": ["-ic"]
+                }
+            },
+            "problemMatcher": []
         }
     ]
 }

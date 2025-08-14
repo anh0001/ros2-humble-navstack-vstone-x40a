@@ -39,6 +39,10 @@ sudo apt install ros-humble-slam-toolbox ros-humble-gazebo-ros-pkgs \
 # Clone and build workspace
 git clone <repository-url> ros2-humble-navstack-vstone-x40a
 cd ros2-humble-navstack-vstone-x40a
+
+# Initialize submodules (required for Vstone packages)
+git submodule update --init --recursive
+
 colcon build --symlink-install
 
 # Source workspace
@@ -76,11 +80,13 @@ ros2 launch rover_navigation rover_navigation.launch.py use_slam:=true
 
 ```
 src/
-├── rover_description/     # URDF models and robot description
-├── rover_navigation/      # Nav2 configuration and launch files  
-├── rover_bringup/        # Hardware drivers and bringup
-├── rover_gazebo/         # Simulation worlds and models
-└── rover_waypoints/      # Waypoint following examples
+├── rover_description/        # URDF models and robot description
+├── rover_navigation/         # Nav2 configuration and launch files  
+├── rover_bringup/           # Hardware drivers and bringup
+├── rover_gazebo/            # Simulation worlds and models
+├── rover_waypoints/         # Waypoint following examples
+├── fwdsrover_xna_ros2/      # Git submodule: Vstone hardware packages
+└── mecanumrover_description/ # Git submodule: Vstone URDF models (humble)
 ```
 
 ## Configuration
@@ -96,10 +102,11 @@ The navigation stack is tuned for the X40A's specifications:
 
 ### Hardware Integration
 
-- **Vstone Base**: Interfaces with `fwdsrover_xna_ros2` package
+- **Vstone Base**: Interfaces with `fwdsrover_xna_ros2` git submodule package
 - **LiDAR**: Livox MID-360 via `livox_ros_driver2`
 - **Topic Remapping**: `/cmd_vel` → `/rover_twist` for Vstone compatibility
 - **Emergency Stop**: Hardware button provides immediate motor cutoff
+- **Robot Models**: Uses official Vstone URDF from `mecanumrover_description` git submodule
 
 ## Usage Modes
 

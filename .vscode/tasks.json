@@ -4,7 +4,7 @@
         {
             "label": "RViz: Robot Model Display",
             "type": "shell",
-            "command": "DISPLAY=:77 XAUTHORITY=$HOME/.Xauthority xterm -hold -e \"source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 launch mecanumrover_description display.launch.py > eval.log 2>&1\" &",
+            "command": "DISPLAY=:77 XAUTHORITY=$HOME/.Xauthority xterm -hold -e \"source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 launch rover_description robot_state_publisher.launch.py > eval.log 2>&1\" &",
             "presentation": {
                 "echo": true,
                 "reveal": "never",

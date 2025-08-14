@@ -59,7 +59,7 @@
         {
             "label": "Gazebo: Simulation Launch",
             "type": "shell",
-            "command": "DISPLAY=:77 XAUTHORITY=$HOME/.Xauthority xterm -hold -e \"source /opt/ros/humble/setup.bash && source /usr/share/gazebo-11/setup.bash && source install/setup.bash && export GAZEBO_PLUGIN_PATH=$(ros2 pkg prefix gazebo_ros2_control)/lib:$GAZEBO_PLUGIN_PATH && export GAZEBO_RESOURCE_PATH=$(ros2 pkg prefix mecanumrover_description)/share:$(ros2 pkg prefix rover_description)/share:/usr/share/gazebo-11:$GAZEBO_RESOURCE_PATH && ros2 launch rover_gazebo gazebo_sim.launch.py > eval.log 2>&1\" &",
+            "command": "DISPLAY=:77 XAUTHORITY=$HOME/.Xauthority xterm -hold -e \"source /opt/ros/humble/setup.bash && source /usr/share/gazebo-11/setup.bash && source install/setup.bash && export GAZEBO_PLUGIN_PATH=$(ros2 pkg prefix gazebo_ros2_control)/lib:$GAZEBO_PLUGIN_PATH && export GAZEBO_RESOURCE_PATH=$(ros2 pkg prefix mecanumrover_description)/share:$(ros2 pkg prefix rover_description)/share:/usr/share/gazebo-11:$GAZEBO_RESOURCE_PATH && export GAZEBO_MODEL_PATH=$(ros2 pkg prefix mecanumrover_description)/share:$(ros2 pkg prefix rover_description)/share:$GAZEBO_MODEL_PATH && ros2 launch rover_gazebo gazebo_sim.launch.py > eval.log 2>&1\" &",
             "presentation": {
                 "echo": true,
                 "reveal": "never",

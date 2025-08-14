@@ -12,6 +12,8 @@
   <exec_depend>rover_bringup</exec_depend>
   <exec_depend>rover_gazebo</exec_depend>
   <exec_depend>rover_waypoints</exec_depend>
+  <exec_depend>fwdsrover_xna</exec_depend>
+  <exec_depend>fwdsrover_xna_bringup</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

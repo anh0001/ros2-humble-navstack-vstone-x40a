@@ -15,27 +15,30 @@ def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time')
     
-    # Vstone 4WDS Rover base driver
-    vstone_driver = Node(
-        package='fwdsrover_xna_ros2',
-        executable='fwdsrover_xna_node',
-        name='vstone_base_driver',
+    # Micro-ROS agent for communication with Vstone hardware
+    micro_ros_agent = Node(
+        package='micro_ros_agent',
+        executable='micro_ros_agent',
+        name='micro_ros_agent',
         output='screen',
-        parameters=[
-            PathJoinSubstitution([
-                FindPackageShare('rover_bringup'),
-                'config',
-                'vstone_params.yaml'
-            ]),
-            {'use_sim_time': use_sim_time}
-        ],
+        arguments=['serial', '--dev', '/dev/ttyACM0', '--baudrate', '115200', '-v4'],
+        parameters=[{'use_sim_time': use_sim_time}]
+    )
+    
+    # Vstone odometry publisher from official package
+    vstone_odom = Node(
+        package='fwdsrover_xna_bringup',
+        executable='pub_odom',
+        name='vstone_odometry',
+        output='screen',
+        parameters=[{'use_sim_time': use_sim_time}],
         remappings=[
-            ('/cmd_vel', '/rover_twist'),
             ('/odom', '/odom')
         ]
     )
 
     return LaunchDescription([
         use_sim_time_arg,
-        vstone_driver
+        micro_ros_agent,
+        vstone_odom
     ])

@@ -8,6 +8,15 @@
   <xacro:property name="wheel_radius" value="0.075"/>
   <xacro:property name="lidar_height" value="0.2"/>
   
+  <!-- Base Footprint (on ground, compatible with official Vstone package) -->
+  <link name="base_footprint"/>
+  
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0.075" rpy="0 0 0"/>  <!-- Lift base_link by wheel radius -->
+  </joint>
+  
   <!-- Base Link -->
   <link name="base_link">
     <inertial>

@@ -1,0 +1,7 @@
+[submodule "src/fwdsrover_xna_ros2"]
+	path = src/fwdsrover_xna_ros2
+	url = https://github.com/anh0001/fwdsrover_xna_ros2.git
+[submodule "src/mecanumrover_description"]
+	path = src/mecanumrover_description
+	url = https://github.com/anh0001/mecanumrover_description.git
+	branch = humble

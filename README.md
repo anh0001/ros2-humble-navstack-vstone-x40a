@@ -80,13 +80,13 @@ ros2 launch rover_navigation rover_navigation.launch.py use_slam:=true
 
 ```
 src/
-├── rover_description/        # URDF models and robot description
+├── rover_description/        # URDF models and robot description (uses mecanumrover base + X40A modifications)
 ├── rover_navigation/         # Nav2 configuration and launch files  
 ├── rover_bringup/           # Hardware drivers and bringup
 ├── rover_gazebo/            # Simulation worlds and models
 ├── rover_waypoints/         # Waypoint following examples
 ├── fwdsrover_xna_ros2/      # Git submodule: Vstone hardware packages
-└── mecanumrover_description/ # Git submodule: Vstone URDF models (humble)
+└── mecanumrover_description/ # Git submodule: Base URDF model (no official X40A URDF available)
 ```
 
 ## Configuration
@@ -106,7 +106,7 @@ The navigation stack is tuned for the X40A's specifications:
 - **LiDAR**: Livox MID-360 via `livox_ros_driver2`
 - **Topic Remapping**: `/cmd_vel` → `/rover_twist` for Vstone compatibility
 - **Emergency Stop**: Hardware button provides immediate motor cutoff
-- **Robot Models**: Uses official Vstone URDF from `mecanumrover_description` git submodule
+- **Robot Models**: Uses `mecanumrover_description` URDF as base (no official X40A URDF available from Vstone)
 
 ## Usage Modes
 

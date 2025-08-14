@@ -41,7 +41,11 @@ sudo apt install \
 
 # Install additional dependencies
 sudo apt install ros-humble-slam-toolbox \
-                 ros-humble-robot-localization ros-humble-pointcloud-to-laserscan
+                 ros-humble-robot-localization \
+                 ros-humble-pointcloud-to-laserscan \
+                 ros-humble-controller-manager \
+                 ros-humble-joint-state-broadcaster \
+                 ros-humble-mecanum-drive-controller
 
 # Clone and build workspace
 git clone <repository-url> ros2-humble-navstack-vstone-x40a

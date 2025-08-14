@@ -2,7 +2,7 @@
 
 import os
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, ExecuteProcess, IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, ExecuteProcess, IncludeLaunchDescription, TimerAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
@@ -61,10 +61,31 @@ def generate_launch_description():
         output='screen'
     )
 
+    # Controller spawners (after Gazebo + robot_state_publisher are up)
+    spawner_js = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['joint_state_broadcaster', '--controller-manager', '/controller_manager'],
+        output='screen'
+    )
+
+    spawner_drive = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['mecanum_drive_controller', '--controller-manager', '/controller_manager'],
+        output='screen'
+    )
+
+    # Delay spawners to ensure /controller_manager exists
+    delayed_spawner_js = TimerAction(period=3.0, actions=[spawner_js])
+    delayed_spawner_drive = TimerAction(period=4.0, actions=[spawner_drive])
+
     return LaunchDescription([
         world_arg,
         use_sim_time_arg,
         gazebo,
         robot_description_launch,
-        spawn_robot
+        spawn_robot,
+        delayed_spawner_js,
+        delayed_spawner_drive,
     ])

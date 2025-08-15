@@ -127,13 +127,24 @@ The navigation stack is tuned for the X40A's specifications:
 - **Accuracy**: 8cm goal tolerance meets delivery requirements
 - **Sensor**: Livox MID-360 with ground filtering and 3D→2D projection
 
-### Hardware Integration
+#### Hardware Integration
 
-- **Vstone Base**: Interfaces with `fwdsrover_xna_ros2` git submodule package
+- **Vstone Base**: Interfaces with `fwdsrover_xna_ros2` git submodule package via `/dev/x40a_ser`
 - **LiDAR**: Livox MID-360 via `livox_ros_driver2`
 - **Topic Remapping**: `/cmd_vel` → `/rover_twist` for Vstone compatibility
 - **Emergency Stop**: Hardware button provides immediate motor cutoff
 - **Robot Models**: Uses `mecanumrover_description` URDF as base (no official X40A URDF available from Vstone)
+
+### Device Setup
+
+For consistent hardware communication, set up the persistent device name:
+
+```bash
+# Run the device setup script
+./scripts/setup_x40a_device.sh
+```
+
+This creates a udev rule to bind the Vstone X40A controller (USB ID `0403:6015`) to `/dev/x40a_ser`, ensuring consistent device naming across reboots and USB port changes.
 
 ## ESP Controller Firmware Flashing
 

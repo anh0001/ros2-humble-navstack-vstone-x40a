@@ -73,6 +73,70 @@
                 }
             },
             "problemMatcher": []
+        },
+        {
+            "label": "Hardware: Bringup Rover (Full)",
+            "type": "shell",
+            "command": "bash",
+            "args": ["-c", "source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 launch rover_bringup hardware_bringup.launch.py"],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "detail": "Launch hardware drivers for Vstone base and Livox LiDAR"
+        },
+        {
+            "label": "Hardware: Vstone Only",
+            "type": "shell",
+            "command": "bash",
+            "args": ["-c", "source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 launch rover_bringup vstone_base.launch.py"],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "detail": "Launch only Vstone base hardware (no LiDAR)"
+        },
+        {
+            "label": "Teleop: Keyboard Control",
+            "type": "shell",
+            "command": "bash",
+            "args": ["-c", "source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r cmd_vel:=rover_twist"],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "detail": "Control rover with keyboard (requires hardware bringup)"
+        },
+        {
+            "label": "Teleop: Mouse Control",
+            "type": "shell",
+            "command": "bash",
+            "args": ["-c", "source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 launch fwdsrover_xna_bringup mouse_teleop.launch.py"],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "detail": "Control rover with mouse (requires hardware bringup)"
         }
     ]
 }

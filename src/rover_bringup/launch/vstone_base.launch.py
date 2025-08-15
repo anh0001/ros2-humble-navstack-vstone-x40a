@@ -21,7 +21,7 @@ def generate_launch_description():
         executable='micro_ros_agent',
         name='micro_ros_agent',
         output='screen',
-        arguments=['serial', '--dev', '/dev/ttyACM0', '--baudrate', '115200', '-v4'],
+        arguments=['serial', '--dev', '/dev/x40a_ser', '--baudrate', '921600', '-v4'],
         parameters=[{'use_sim_time': use_sim_time}]
     )
     

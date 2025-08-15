@@ -135,6 +135,19 @@ The navigation stack is tuned for the X40A's specifications:
 - **Emergency Stop**: Hardware button provides immediate motor cutoff
 - **Robot Models**: Uses `mecanumrover_description` URDF as base (no official X40A URDF available from Vstone)
 
+## ESP Controller Firmware Flashing
+
+To flash the ESP32 controller firmware on the Vstone X40A rover:
+
+1. Follow the Arduino IDE setup and flashing procedure in `docs/4wds-rover-x40a-manual-20250312.pdf` (Chapter 7)
+2. Download the required Arduino libraries: https://drive.google.com/file/d/1tSduQFadtyptYKn2otTsEYBXKyfuHoxZ/view?usp=sharing
+3. Use exact package versions as specified in the manual for successful firmware flashing
+
+**Critical Requirements:**
+- Arduino IDE with ESP32 board support version 2.0.13
+- NimBLE-Arduino library version 1.4.1
+- Vstone vs_wrc058_fwdsrover library from the Google Drive link
+
 ## Usage Modes
 
 ### 1. Mapping (SLAM)

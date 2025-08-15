@@ -49,7 +49,8 @@ sudo apt install ros-humble-slam-toolbox \
                  ros-humble-gazebo-ros-pkgs \
                  ros-humble-gazebo-ros2-control \
                  ros-humble-ros2-control \
-                 ros-humble-ros2-controllers
+                 ros-humble-ros2-controllers \
+                 ros-humble-micro-ros-agent
 
 # Clone and build workspace
 git clone <repository-url> ros2-humble-navstack-vstone-x40a
@@ -58,6 +59,15 @@ cd ros2-humble-navstack-vstone-x40a
 # Initialize submodules (required for Vstone packages)
 git submodule update --init --recursive
 
+# Build and install Livox SDK2 (required for Livox LiDAR driver)
+cd src/Livox-SDK2
+mkdir build && cd build
+cmake ..
+make -j4
+sudo make install
+
+# Return to workspace root and build
+cd /path/to/ros2-humble-navstack-vstone-x40a
 colcon build --symlink-install
 
 # Source workspace
@@ -101,7 +111,9 @@ src/
 ├── rover_gazebo/            # Simulation worlds and models
 ├── rover_waypoints/         # Waypoint following examples
 ├── fwdsrover_xna_ros2/      # Git submodule: Vstone hardware packages
-└── mecanumrover_description/ # Git submodule: Base URDF model (no official X40A URDF available)
+├── mecanumrover_description/ # Git submodule: Base URDF model (no official X40A URDF available)
+├── Livox-SDK2/              # Livox SDK2 for LiDAR hardware interface
+└── livox_ros_driver2/       # ROS 2 driver for Livox MID-360 LiDAR
 ```
 
 ## Configuration
@@ -194,6 +206,11 @@ Key displays:
 - Check odometry: `ros2 topic echo /odom`
 - Verify TF tree: `ros2 run tf2_tools view_frames`
 - Ensure Vstone base connection and power
+
+### Livox LiDAR Issues
+- Check LiDAR connection: `ros2 topic echo /points`
+- Verify SDK2 installation: `ls /usr/local/lib/liblivox_lidar_sdk_*`
+- Check driver launch: `ros2 launch rover_bringup livox_driver.launch.py`
 
 ### Poor Localization  
 - Set initial pose in RViz near actual position

@@ -106,7 +106,7 @@ ros2 launch rover_navigation rover_navigation.launch.py \
   use_slam:=false \
   map:=/path/to/your/map.yaml
 
-# Mapping mode  
+# Mapping mode
 ros2 launch rover_navigation rover_navigation.launch.py use_slam:=true
 ```
 

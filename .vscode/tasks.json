@@ -137,6 +137,24 @@
                 "cwd": "${workspaceFolder}"
             },
             "detail": "Control rover with mouse (requires hardware bringup)"
+        },
+        {
+            "label": "RViz: Fwdsrover Configuration",
+            "type": "shell",
+            "command": "DISPLAY=:1 XAUTHORITY=$HOME/.Xauthority xterm -hold -e \"source /opt/ros/humble/setup.bash && source install/setup.bash && rviz2 -d src/fwdsrover_xna_ros2/fwdsrover_xna_bringup/rviz/fwdsrover_xna.rviz > eval.log 2>&1\" &",
+            "presentation": {
+                "echo": true,
+                "reveal": "never",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "shell": {
+                    "executable": "/bin/bash",
+                    "args": ["-ic"]
+                }
+            },
+            "problemMatcher": []
         }
     ]
 }

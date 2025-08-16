@@ -1,5 +1,13 @@
 {
     "version": "2.0.0",
+    "inputs": [
+        {
+            "id": "mapPath",
+            "description": "Path to map file (.yaml)",
+            "default": "${workspaceFolder}/maps/map.yaml",
+            "type": "promptString"
+        }
+    ],
     "tasks": [
         {
             "label": "Build Workspace",
@@ -103,6 +111,38 @@
                 }
             },
             "problemMatcher": []
+        },
+        {
+            "label": "Navigation: SLAM Mapping",
+            "type": "shell",
+            "command": "bash",
+            "args": ["-c", "source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 launch rover_navigation rover_navigation.launch.py use_slam:=true"],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "detail": "Launch navigation with SLAM for mapping new environments"
+        },
+        {
+            "label": "Navigation: Map-based Navigation",
+            "type": "shell",
+            "command": "bash",
+            "args": ["-c", "source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 launch rover_navigation rover_navigation.launch.py use_slam:=false map:=${input:mapPath}"],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "detail": "Launch navigation with existing map file"
         }
     ]
 }

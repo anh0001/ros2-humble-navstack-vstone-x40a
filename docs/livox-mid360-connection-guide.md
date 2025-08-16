@@ -210,22 +210,45 @@ ros2 launch rover_bringup livox_driver.launch.py --ros-args --log-level debug
 
 ## 8. Finding the Livox MID-360 IP Address
 
-If the default IP (192.168.1.12) doesn't work, use these methods to discover the device:
+Here's how you can determine the IP address of a Livox Mid-360 LiDAR sensor:
 
-### Method 1: Livox Viewer (Recommended)
-1. Connect sensor directly via Ethernet
-2. Set PC to common Livox subnet (192.168.1.x/24)
-3. Open Livox Viewer → discovers device and shows current IP
-4. Can change device IP and save configuration
+### 1. Default Static IP Address
+- By default, every Livox Mid-360 is set to static IP mode
+- Its IP address is assigned as `192.168.1.1XX`, where "XX" corresponds to the last two digits of the device's serial number
+- It uses a default subnet mask of `255.255.255.0` and a default gateway of `192.168.1.1`
 
-### Method 2: Auto-discovery via Driver
-```bash
-# Use broadcast code from device label in livox_config.json
-# Driver will discover device and print IP in logs
-ros2 launch rover_bringup livox_driver.launch.py --ros-args --log-level debug
-```
+### 2. Viewing the Device in Livox Viewer 2
+- Connect the Mid-360 to your computer using the provided M12 aviation connector and RJ-45 Ethernet (via the splitter cable), and power it on
+- Launch Livox Viewer 2 (available from Livox's official website)
+- In the Device Manager panel, your Mid-360 should appear, complete with its IP address
+- You can even change the device's IP through the settings in the Viewer if needed
 
-### Method 3: Network Scanning
+### 3. Using Network Broadcast Queries (Advanced)
+- Upon powering up, the Mid-360 periodically broadcasts its device info (including IP, serial number, status) to the network—by default, this is the broadcast address
+- You could use a tool like tcpdump, Wireshark, or a custom UDP broadcast script to listen for these packets and extract the IP address—especially useful if the IP has been changed or if you're managing multiple sensors
+- Livox's UDP communication protocol listens on port 56000 for device queries; the sensor will reply with its information via broadcast even if it's on a different IP subnet
+
+### Quick Reference Table
+
+| Method | Description |
+|--------|-------------|
+| Default Static IP | IP = 192.168.1.1XX (XX = last two digits of serial number) |
+| Livox Viewer 2 (GUI) | View and optionally change IP via device list in the viewer |
+| Network Broadcast / Packet Sniffing | Capture UDP broadcasts or queries (e.g., via port 56000) to find device info |
+
+### What Should You Do First?
+
+If you're just trying to quickly find the IP:
+1. Connect the Mid-360 directly (M12 + Ethernet RJ-45 + power)
+2. Set your computer's Ethernet IP to something compatible (e.g., 192.168.1.50, subnet mask 255.255.255.0)
+3. Open Livox Viewer 2 and check the Device Manager
+4. The listed device row will show the current IP—use that for any configuration or SDK connections
+
+### Legacy Discovery Methods
+
+If Livox Viewer 2 is not available, you can use these alternative methods:
+
+#### Network Scanning
 ```bash
 # Quick subnet scan
 nmap -sn 192.168.1.0/24
@@ -234,15 +257,15 @@ nmap -sn 192.168.1.0/24
 for i in {1..254}; do ping -c1 -W1 192.168.1.$i >/dev/null && echo 192.168.1.$i; done
 arp -n
 
-# Monitor network traffic
-sudo tcpdump -i ethX net 192.168.1.0/24
+# Monitor network traffic for UDP broadcasts on port 56000
+sudo tcpdump -i ethX port 56000
 ```
 
-### Method 4: Check Other Common Subnets
+#### Auto-discovery via Driver
 ```bash
-# Try common private ranges if 192.168.1.x fails
-sudo ip addr add 192.168.0.5/24 dev ethX  # Try 192.168.0.x
-sudo ip addr add 10.0.0.5/24 dev ethX     # Try 10.0.0.x
+# Use broadcast code from device label in livox_config.json
+# Driver will discover device and print IP in logs
+ros2 launch rover_bringup livox_driver.launch.py --ros-args --log-level debug
 ```
 
 ## 9. Integration with Navigation Stack

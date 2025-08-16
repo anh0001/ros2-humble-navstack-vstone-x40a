@@ -2,24 +2,6 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "RViz: Robot Model Display",
-            "type": "shell",
-            "command": "DISPLAY=:77 XAUTHORITY=$HOME/.Xauthority xterm -hold -e \"source /opt/ros/humble/setup.bash && source /usr/share/gazebo-11/setup.bash && source install/setup.bash && export GAZEBO_PLUGIN_PATH=$(ros2 pkg prefix gazebo_ros2_control)/lib:$GAZEBO_PLUGIN_PATH && export GAZEBO_RESOURCE_PATH=$(ros2 pkg prefix mecanumrover_description)/share:$(ros2 pkg prefix rover_description)/share:/usr/share/gazebo-11:$GAZEBO_RESOURCE_PATH && ros2 launch rover_description robot_state_publisher.launch.py > eval.log 2>&1\" &",
-            "presentation": {
-                "echo": true,
-                "reveal": "never",
-                "focus": false,
-                "panel": "shared"
-            },
-            "options": {
-                "shell": {
-                    "executable": "/bin/bash",
-                    "args": ["-ic"]
-                }
-            },
-            "problemMatcher": []
-        },
-        {
             "label": "Build Workspace",
             "type": "shell",
             "command": "bash",
@@ -55,24 +37,6 @@
                 "cwd": "${workspaceFolder}"
             },
             "detail": "Clean build the entire ROS 2 workspace"
-        },
-        {
-            "label": "Gazebo: Simulation Launch",
-            "type": "shell",
-            "command": "DISPLAY=:77 XAUTHORITY=$HOME/.Xauthority xterm -hold -e \"source /opt/ros/humble/setup.bash && source /usr/share/gazebo-11/setup.bash && source install/setup.bash && export GAZEBO_PLUGIN_PATH=$(ros2 pkg prefix gazebo_ros)/lib:$(ros2 pkg prefix gazebo_ros2_control)/lib:$GAZEBO_PLUGIN_PATH && export GAZEBO_RESOURCE_PATH=$(ros2 pkg prefix mecanumrover_description)/share:$(ros2 pkg prefix rover_description)/share:/usr/share/gazebo-11:$GAZEBO_RESOURCE_PATH && export GAZEBO_MODEL_PATH=$(ros2 pkg prefix mecanumrover_description)/share:$(ros2 pkg prefix rover_description)/share:$GAZEBO_MODEL_PATH && ros2 launch rover_gazebo gazebo_sim.launch.py > eval.log 2>&1\" &",
-            "presentation": {
-                "echo": true,
-                "reveal": "never",
-                "focus": false,
-                "panel": "shared"
-            },
-            "options": {
-                "shell": {
-                    "executable": "/bin/bash",
-                    "args": ["-ic"]
-                }
-            },
-            "problemMatcher": []
         },
         {
             "label": "Hardware: Bringup Rover (Full)",
@@ -121,22 +85,6 @@
                 "cwd": "${workspaceFolder}"
             },
             "detail": "Control rover with keyboard (requires hardware bringup)"
-        },
-        {
-            "label": "Teleop: Mouse Control",
-            "type": "shell",
-            "command": "bash",
-            "args": ["-c", "source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 launch fwdsrover_xna_bringup mouse_teleop.launch.py"],
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": true,
-                "panel": "shared"
-            },
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "detail": "Control rover with mouse (requires hardware bringup)"
         },
         {
             "label": "RViz: Fwdsrover Configuration",

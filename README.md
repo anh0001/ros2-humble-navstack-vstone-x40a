@@ -8,6 +8,12 @@ Production-ready autonomous navigation system for indoor delivery operations.
 
 This repository provides a complete ROS 2 Humble navigation stack for the Vstone 4WDS Rover X40A, designed for indoor warehouse delivery applications. The system supports both simulation and hardware deployment with a single-command launch interface.
 
+## Robot Specifications
+
+For comprehensive technical specifications of the Vstone 4WDS Rover X40A platform, including physical dimensions, motor specifications, electronics, and performance parameters, see:
+
+**📋 [Vstone X40A Technical Specifications](docs/vstone-x40a-specifications.md)**
+
 ## Features
 
 - **One-command launch** with `use_slam` argument for mapping vs. navigation modes

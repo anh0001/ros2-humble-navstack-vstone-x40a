@@ -28,9 +28,9 @@ def generate_launch_description():
                 'livox_config.json'
             ]),
             'use_sim_time': use_sim_time,
-            'frame_id': 'livox_frame',
+            'frame_id': 'lidar_link',
             'lidar_bag_file_path': '',
-            'xfer_format': 1,
+            'xfer_format': 0,
             'multi_topic': 0,
             'data_src': 0,
             'publish_freq': 10.0,

@@ -43,11 +43,18 @@ def generate_launch_description():
         description='Use simulation time'
     )
 
+    enable_waypoints_arg = DeclareLaunchArgument(
+        'enable_waypoints',
+        default_value='false',
+        description='Launch waypoint follower'
+    )
+
     # Get launch configurations
     use_slam = LaunchConfiguration('use_slam')
     map_yaml_file = LaunchConfiguration('map')
     params_file = LaunchConfiguration('params_file')
     use_sim_time = LaunchConfiguration('use_sim_time')
+    enable_waypoints = LaunchConfiguration('enable_waypoints')
 
     # Robot description
     robot_description_launch = IncludeLaunchDescription(
@@ -154,7 +161,8 @@ def generate_launch_description():
         executable='waypoint_follower.py',
         name='waypoint_follower',
         output='screen',
-        parameters=[{'use_sim_time': use_sim_time}]
+        parameters=[{'use_sim_time': use_sim_time}],
+        condition=IfCondition(enable_waypoints)
     )
 
     return LaunchDescription([
@@ -162,6 +170,7 @@ def generate_launch_description():
         map_arg,
         params_file_arg,
         use_sim_time_arg,
+        enable_waypoints_arg,
         robot_description_launch,
         hardware_bringup_launch,
         slam_launch,

@@ -56,21 +56,17 @@ sudo apt install ros-humble-slam-toolbox \
 git clone <repository-url> ros2-humble-navstack-vstone-x40a
 cd ros2-humble-navstack-vstone-x40a
 
+# Initialize submodules (required for Vstone packages)
+git submodule update --init --recursive
+
 # Set up micro-ROS environment
-cd src/micro_ros_setup
 rosdep update && rosdep install --from-paths src --ignore-src -y
-colcon build
+colcon build --packages-select micro_ros_setup
 source install/local_setup.bash
 
 ros2 run micro_ros_setup create_agent_ws.sh
 ros2 run micro_ros_setup build_agent.sh
 source install/local_setup.bash
-
-# Return to workspace root
-cd ../..
-
-# Initialize submodules (required for Vstone packages)
-git submodule update --init --recursive
 
 # Build and install Livox SDK2 (required for Livox LiDAR driver)
 cd src/Livox-SDK2

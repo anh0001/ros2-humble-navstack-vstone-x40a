@@ -8,7 +8,7 @@ vstone_odometry:
     
     # Frame IDs (matching official package)
     odom_frame_id: "odom"
-    base_frame_id: "base_footprint"
+    base_frame_id: "base_link"
     
     # Robot physical parameters (from official mecanumrover_description URDF)
     wheel_base: 0.24      # Distance between front and rear axles (m) [0.12 - (-0.12)]

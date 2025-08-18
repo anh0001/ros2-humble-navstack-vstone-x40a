@@ -41,19 +41,19 @@ def generate_launch_description():
         launch_arguments={'use_sim_time': use_sim_time}.items()
     )
 
-    # Convert point cloud to LaserScan for AMCL
-    pcl_to_scan = Node(
-        package='pointcloud_to_laserscan',
-        executable='pointcloud_to_laserscan_node',
-        name='pcl_to_scan',
-        parameters=[{
-            'target_frame': 'lidar_link',
-            'transform_tolerance': 0.01,
-            'min_height': 0.0,
-            'max_height': 1.0
-        }],
-        remappings=[('cloud_in', '/points'), ('scan', '/scan')]
-    )
+    # # Convert point cloud to LaserScan for AMCL
+    # pcl_to_scan = Node(
+    #     package='pointcloud_to_laserscan',
+    #     executable='pointcloud_to_laserscan_node',
+    #     name='pcl_to_scan',
+    #     parameters=[{
+    #         'target_frame': 'lidar_link',
+    #         'transform_tolerance': 0.01,
+    #         'min_height': 0.0,
+    #         'max_height': 1.0
+    #     }],
+    #     remappings=[('cloud_in', '/points'), ('scan', '/scan')]
+    # )
 
     # Topic remapping node for /cmd_vel -> /rover_twist
     cmd_vel_relay = Node(
@@ -68,6 +68,6 @@ def generate_launch_description():
         use_sim_time_arg,
         vstone_base_launch,
         livox_driver_launch,
-        pcl_to_scan,
+        # pcl_to_scan,
         cmd_vel_relay
     ])

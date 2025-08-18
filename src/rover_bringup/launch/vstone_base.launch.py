@@ -31,7 +31,14 @@ def generate_launch_description():
         executable='pub_odom',
         name='vstone_odometry',
         output='screen',
-        parameters=[{'use_sim_time': use_sim_time}],
+        parameters=[
+            PathJoinSubstitution([
+                FindPackageShare('rover_bringup'),
+                'config',
+                'vstone_params.yaml'
+            ]),
+            {'use_sim_time': use_sim_time}
+        ],
         remappings=[
             ('/odom', '/odom')
         ]

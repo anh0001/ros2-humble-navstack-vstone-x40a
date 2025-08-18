@@ -50,7 +50,7 @@
             "label": "Hardware: Bringup Rover (Full)",
             "type": "shell",
             "command": "bash",
-            "args": ["-c", "source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 launch rover_bringup hardware_bringup.launch.py > eval.log 2>&1"],
+            "args": ["-c", "source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 launch rover_bringup hardware_bringup.launch.py"],
             "presentation": {
                 "echo": true,
                 "reveal": "always",

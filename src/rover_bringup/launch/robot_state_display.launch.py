@@ -46,19 +46,19 @@ def generate_launch_description():
         output='screen'
     )
 
-    # Joint state publisher for manual control (without GUI)
-    joint_state_publisher_node = Node(
-        package='joint_state_publisher',
-        executable='joint_state_publisher',
-        condition=UnlessCondition(LaunchConfiguration('gui'))
-    )
+    # # Joint state publisher for manual control (without GUI)
+    # joint_state_publisher_node = Node(
+    #     package='joint_state_publisher',
+    #     executable='joint_state_publisher',
+    #     condition=UnlessCondition(LaunchConfiguration('gui'))
+    # )
 
-    # Joint state publisher with GUI for interactive control
-    joint_state_publisher_gui_node = Node(
-        package='joint_state_publisher_gui',
-        executable='joint_state_publisher_gui',
-        condition=IfCondition(LaunchConfiguration('gui'))
-    )
+    # # Joint state publisher with GUI for interactive control
+    # joint_state_publisher_gui_node = Node(
+    #     package='joint_state_publisher_gui',
+    #     executable='joint_state_publisher_gui',
+    #     condition=IfCondition(LaunchConfiguration('gui'))
+    # )
 
     rviz_node = Node(
         package='rviz2',
@@ -72,8 +72,8 @@ def generate_launch_description():
         gui_arg,
         model_arg,
         rviz_arg,
-        joint_state_publisher_node,
-        joint_state_publisher_gui_node,
+        # joint_state_publisher_node,
+        # joint_state_publisher_gui_node,
         robot_state_publisher_node,
         rviz_node
     ])

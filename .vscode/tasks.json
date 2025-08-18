@@ -144,6 +144,44 @@
                 "cwd": "${workspaceFolder}"
             },
             "detail": "Launch navigation with existing map file"
+        },
+        {
+            "label": "RQT: Node Graph",
+            "type": "shell",
+            "command": "DISPLAY=:1 XAUTHORITY=$HOME/.Xauthority xterm -hold -e \"source /opt/ros/humble/setup.bash && source install/setup.bash && rqt\" &",
+            "presentation": {
+                "echo": true,
+                "reveal": "never",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "shell": {
+                    "executable": "/bin/bash",
+                    "args": ["-ic"]
+                }
+            },
+            "problemMatcher": [],
+            "detail": "Launch RQT for monitoring ROS topics, services, and node graph"
+        },
+        {
+            "label": "TF: View Transforms",
+            "type": "shell",
+            "command": "DISPLAY=:1 XAUTHORITY=$HOME/.Xauthority xterm -hold -e \"source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 run tf2_tools view_frames\" &",
+            "presentation": {
+                "echo": true,
+                "reveal": "never",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "shell": {
+                    "executable": "/bin/bash",
+                    "args": ["-ic"]
+                }
+            },
+            "problemMatcher": [],
+            "detail": "Generate and display TF transformation tree"
         }
     ]
 }

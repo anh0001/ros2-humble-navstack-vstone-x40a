@@ -56,17 +56,7 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time')
     enable_waypoints = LaunchConfiguration('enable_waypoints')
 
-    # Robot description
-    robot_description_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([
-            PathJoinSubstitution([
-                FindPackageShare('rover_description'),
-                'launch',
-                'robot_state_publisher.launch.py'
-            ])
-        ]),
-        launch_arguments={'use_sim_time': use_sim_time}.items()
-    )
+    # Robot description is now handled by vstone_base.launch.py
 
     # Hardware bringup (Vstone base + Livox LiDAR)
     hardware_bringup_launch = IncludeLaunchDescription(
@@ -171,7 +161,6 @@ def generate_launch_description():
         params_file_arg,
         use_sim_time_arg,
         enable_waypoints_arg,
-        robot_description_launch,
         hardware_bringup_launch,
         slam_launch,
         localization_launch,

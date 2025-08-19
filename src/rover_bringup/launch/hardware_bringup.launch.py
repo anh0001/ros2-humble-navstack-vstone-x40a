@@ -47,7 +47,7 @@ def generate_launch_description():
         executable='pointcloud_to_laserscan_node',
         name='pcl_to_scan',
         parameters=[{
-            'source_frame': 'lidar_link',
+            'target_frame': 'lidar_link',
             'transform_tolerance': 0.1,
             'min_height': -0.20,
             'max_height': 0.80,

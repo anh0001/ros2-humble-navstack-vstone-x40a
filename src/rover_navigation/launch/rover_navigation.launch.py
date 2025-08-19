@@ -22,7 +22,7 @@ def generate_launch_description():
         default_value=PathJoinSubstitution([
             FindPackageShare('rover_navigation'),
             'maps',
-            'warehouse_map.yaml'
+            'x40a_lab.yaml'
         ]),
         description='Path to the map file'
     )

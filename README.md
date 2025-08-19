@@ -46,17 +46,23 @@ sudo apt install \
   ros-humble-gazebo-plugins
 
 # Install additional dependencies
-sudo apt install ros-humble-slam-toolbox \
-                 ros-humble-robot-localization \
-                 ros-humble-pointcloud-to-laserscan \
-                 ros-humble-controller-manager \
-                 ros-humble-joint-state-broadcaster \
-                 ros-humble-mecanum-drive-controller \
-                 ros-humble-gazebo-ros-pkgs \
-                 ros-humble-gazebo-ros2-control \
-                 ros-humble-ros2-control \
-                 ros-humble-ros2-controllers \
-                 ros-humble-micro-ros-agent
+
+```bash
+sudo apt update
+sudo apt install -y \
+  ros-humble-slam-toolbox \
+  ros-humble-robot-localization \
+  ros-humble-pointcloud-to-laserscan \
+  ros-humble-controller-manager \
+  ros-humble-joint-state-broadcaster \
+  ros-humble-mecanum-drive-controller \
+  ros-humble-gazebo-ros-pkgs \
+  ros-humble-gazebo-ros2-control \
+  ros-humble-ros2-control \
+  ros-humble-ros2-controllers \
+  ros-humble-micro-ros-agent \
+  ros-humble-nav2-behavior-tree
+```
 
 # Clone and build workspace
 git clone <repository-url> ros2-humble-navstack-vstone-x40a

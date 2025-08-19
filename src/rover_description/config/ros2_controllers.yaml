@@ -19,7 +19,7 @@ mecanum_drive_controller:
     wheel_separation_y: 0.175  # Distance between left and right wheels
     wheel_radius: 0.075
 
-    robot_base_frame: "base_link"
+    robot_base_frame: "base_footprint"
     use_stamped_vel: false
 
     # Velocity and acceleration limits

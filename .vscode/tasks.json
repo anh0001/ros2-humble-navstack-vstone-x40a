@@ -3,7 +3,7 @@
     "inputs": [
         {
             "id": "mapPath",
-            "description": "Path to map file (.yaml)",
+            "description": "Path to map file (.yaml) - Leave empty to use default x40a_lab.yaml",
             "default": "",
             "type": "promptString"
         }
@@ -133,7 +133,7 @@
             "label": "Navigation: Map-based Navigation",
             "type": "shell",
             "command": "bash",
-            "args": ["-c", "source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 launch rover_navigation rover_navigation.launch.py use_slam:=false map:=${input:mapPath}"],
+            "args": ["-c", "source /opt/ros/humble/setup.bash && source install/setup.bash && MAP_PATH='${input:mapPath}' && if [ -z \"$MAP_PATH\" ]; then ros2 launch rover_navigation rover_navigation.launch.py use_slam:=false; else ros2 launch rover_navigation rover_navigation.launch.py use_slam:=false map:=\"$MAP_PATH\"; fi"],
             "presentation": {
                 "echo": true,
                 "reveal": "always",
@@ -143,7 +143,7 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "detail": "Launch navigation with existing map file"
+            "detail": "Launch navigation with map file (uses default x40a_lab.yaml if no path specified)"
         },
         {
             "label": "RQT: Node Graph",

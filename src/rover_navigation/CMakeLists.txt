@@ -13,6 +13,7 @@ install(DIRECTORY
   config
   launch
   behavior_trees
+  maps
   DESTINATION share/${PROJECT_NAME}/
 )
 

@@ -53,9 +53,9 @@ def generate_launch_description():
             'max_height': 0.80,
             'angle_min': -1.5708,  # -π/2 radians (-90 degrees) - front half circle
             'angle_max': 1.5708,   # π/2 radians (90 degrees) - front half circle
-            'angle_increment': 0.00436,
++           'angle_increment': 0.00436332313,  # π/720 = 0.25°
             'scan_time': 0.1,
-            'range_min': 0.20,
+            'range_min': 0.25,
             'range_max': 10.0,
             'use_inf': True,
             'concurrency_level': 1

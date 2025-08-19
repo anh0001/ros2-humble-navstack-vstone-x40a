@@ -5,8 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /TF1/Tree1/odom1
-        - /TF1/Tree1/odom1/base_footprint1
+        - /TF1/Frames1
       Splitter Ratio: 0.5264706015586853
     Tree Height: 448
   - Class: rviz_common/Selection
@@ -119,7 +118,7 @@ Visualization Manager:
       Class: rviz_default_plugins/LaserScan
       Color: 255; 255; 255
       Color Transformer: Intensity
-      Decay Time: 0
+      Decay Time: 5
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
@@ -161,6 +160,8 @@ Visualization Manager:
           Value: false
         lidar_link:
           Value: true
+        map:
+          Value: true
         odom:
           Value: false
       Marker Scale: 1
@@ -169,19 +170,22 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
+        base_footprint:
+          base_link:
+            back_left_wheel_1:
+              {}
+            back_right_wheel_1:
+              {}
+            front_left_wheel_1:
+              {}
+            front_right_wheel_1:
+              {}
+            lidar_link:
+              {}
+        map:
+          {}
         odom:
-          base_footprint:
-            base_link:
-              back_left_wheel_1:
-                {}
-              back_right_wheel_1:
-                {}
-              front_left_wheel_1:
-                {}
-              front_right_wheel_1:
-                {}
-              lidar_link:
-                {}
+          {}
       Update Interval: 0
       Value: true
   Enabled: true
@@ -230,7 +234,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 3.139169931411743
+      Distance: 4.491194725036621
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -245,10 +249,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.0403974056243896
+      Pitch: 1.2153977155685425
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.2253985404968262
+      Yaw: 3.1153993606567383
     Saved: ~
 Window Geometry:
   Displays:

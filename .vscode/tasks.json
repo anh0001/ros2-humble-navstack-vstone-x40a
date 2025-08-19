@@ -187,7 +187,7 @@
             "label": "Save Map",
             "type": "shell",
             "command": "bash",
-            "args": ["-c", "source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 run nav2_map_server map_saver_cli -f maps/x40a_lab"],
+            "args": ["-c", "source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 run nav2_map_server map_saver_cli -f src/rover_navigation/maps/x40a_lab"],
             "group": "build",
             "presentation": {
                 "echo": true,

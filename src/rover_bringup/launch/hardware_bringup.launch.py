@@ -49,13 +49,13 @@ def generate_launch_description():
         parameters=[{
             'source_frame': 'lidar_link',
             'transform_tolerance': 0.1,
-            'min_height': 0.0,
-            'max_height': 1.0,
+            'min_height': -0.20,
+            'max_height': 0.80,
             'angle_min': -3.14159,
             'angle_max': 3.14159,
             'angle_increment': 0.00436,
             'scan_time': 0.1,
-            'range_min': 0.45,
+            'range_min': 0.20,
             'range_max': 10.0,
             'use_inf': True,
             'concurrency_level': 1

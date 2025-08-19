@@ -92,14 +92,14 @@ controller_server:
       xy_goal_tolerance: 0.08
       yaw_goal_tolerance: 0.15
 
-    # DWB Controller for holonomic behavior
+    # DWB Controller - configured for forward-only motion with front-mounted LiDAR
     FollowPath:
       plugin: "dwb_core::DWBLocalPlanner"
       debug_trajectory_details: false
-      min_vel_x: -0.4
-      min_vel_y: -0.4
+      min_vel_x: 0.0         # Forbid reverse motion (was -0.4)
+      min_vel_y: -0.1        # Allow small lateral motion (was -0.4)
       max_vel_x: 0.4
-      max_vel_y: 0.4
+      max_vel_y: 0.1         # Limit lateral motion (was 0.4)
       max_vel_theta: 0.4
       min_speed_xy: 0.0
       max_speed_xy: 0.4
@@ -123,10 +123,10 @@ controller_server:
       stateful: true
       critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
       BaseObstacle.scale: 0.02
-      PathAlign.scale: 32.0
-      PathAlign.forward_point_distance: 0.1
-      GoalAlign.scale: 24.0
-      GoalAlign.forward_point_distance: 0.1
+      PathAlign.scale: 48.0           # Increased from 32.0 for stronger path alignment
+      PathAlign.forward_point_distance: 0.15  # Increased from 0.1
+      GoalAlign.scale: 36.0           # Increased from 24.0 for stronger goal alignment
+      GoalAlign.forward_point_distance: 0.15  # Increased from 0.1
       PathDist.scale: 32.0
       GoalDist.scale: 24.0
       RotateToGoal.scale: 32.0
@@ -266,8 +266,9 @@ velocity_smoother:
     smoothing_frequency: 20.0
     scale_velocities: false
     feedback: "OPEN_LOOP"
-    max_velocity: [0.5, 0.5, 0.4]
-    min_velocity: [-0.5, -0.5, -0.4]
+    # Velocity limits [vx, vy, wz] - forward-only motion for front-mounted LiDAR
+    max_velocity: [0.5, 0.1, 0.4]   # Limit lateral velocity (was [0.5, 0.5, 0.4])
+    min_velocity: [0.0, -0.1, -0.4] # Forbid reverse motion (was [-0.5, -0.5, -0.4])
     max_accel: [0.5, 0.5, 1.5]
     max_decel: [-0.5, -0.5, -1.5]
     odom_topic: "odom"

@@ -2,7 +2,7 @@
 
 import os
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, GroupAction
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, GroupAction, TimerAction
 from launch.conditions import IfCondition, UnlessCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
@@ -144,6 +144,9 @@ def generate_launch_description():
             'autostart': 'true'
         }.items()
     )
+    
+    # Delay Nav2 a bit so SLAM has time to publish /map and map→odom
+    nav2_bringup_delayed = TimerAction(period=3.0, actions=[nav2_bringup_launch])
 
     # Optional waypoint follower
     waypoint_follower = Node(
@@ -164,6 +167,6 @@ def generate_launch_description():
         hardware_bringup_launch,
         slam_launch,
         localization_launch,
-        nav2_bringup_launch,
+        nav2_bringup_delayed,
         waypoint_follower
     ])

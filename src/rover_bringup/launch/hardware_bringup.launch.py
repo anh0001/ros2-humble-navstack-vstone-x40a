@@ -26,7 +26,7 @@ def generate_launch_description():
                 'vstone_base.launch.py'
             ])
         ]),
-        launch_arguments={'use_sim_time': use_sim_time}.items()
+        launch_arguments=[('use_sim_time', use_sim_time)]
     )
 
     # Livox LiDAR driver
@@ -38,7 +38,7 @@ def generate_launch_description():
                 'livox_driver.launch.py'
             ])
         ]),
-        launch_arguments={'use_sim_time': use_sim_time}.items()
+        launch_arguments=[('use_sim_time', use_sim_time)]
     )
 
     # Convert point cloud to LaserScan for AMCL
@@ -48,7 +48,6 @@ def generate_launch_description():
         name='pcl_to_scan',
         parameters=[{
             'source_frame': 'lidar_link',
-            'target_frame': 'base_link',
             'transform_tolerance': 0.1,
             'min_height': 0.0,
             'max_height': 1.0,

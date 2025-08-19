@@ -69,10 +69,23 @@ def generate_launch_description():
             ('/odom', '/odom')
         ]
     )
+    
+    # Joint state publisher for wheel joints
+    joint_state_publisher = Node(
+        package='joint_state_publisher',
+        executable='joint_state_publisher',
+        name='joint_state_publisher',
+        output='screen',
+        parameters=[{
+            'use_sim_time': use_sim_time,
+            'rate': 50.0
+        }]
+    )
 
     return LaunchDescription([
         use_sim_time_arg,
         robot_state_publisher,
         micro_ros_agent,
-        vstone_odom
+        vstone_odom,
+        joint_state_publisher
     ])

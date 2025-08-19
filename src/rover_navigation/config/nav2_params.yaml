@@ -96,24 +96,24 @@ controller_server:
     FollowPath:
       plugin: "dwb_core::DWBLocalPlanner"
       debug_trajectory_details: false
-      min_vel_x: 0.0         # Forbid reverse motion (was -0.4)
-      min_vel_y: -0.1        # Allow small lateral motion (was -0.4)
+      min_vel_x: -0.2        # Allow gentle reverse when needed (was 0.0)
+      min_vel_y: -0.25       # Give more freedom to dodge (was -0.1)
       max_vel_x: 0.4
-      max_vel_y: 0.1         # Limit lateral motion (was 0.4)
-      max_vel_theta: 0.4
+      max_vel_y: 0.25        # Give more freedom to dodge (was 0.1)
+      max_vel_theta: 0.8     # Turn more decisively (was 0.4)
       min_speed_xy: 0.0
       max_speed_xy: 0.4
       min_speed_theta: 0.0
       acc_lim_x: 0.5
       acc_lim_y: 0.5
-      acc_lim_theta: 1.5
+      acc_lim_theta: 2.0     # Faster angular acceleration (was 1.5)
       decel_lim_x: -0.5
       decel_lim_y: -0.5
-      decel_lim_theta: -1.5
+      decel_lim_theta: -2.0  # Faster angular deceleration (was -1.5)
       vx_samples: 20
       vy_samples: 20
       vtheta_samples: 20
-      sim_time: 1.7
+      sim_time: 1.0          # Shorter horizon reduces path-hugging (was 1.7)
       linear_granularity: 0.05
       angular_granularity: 0.025
       transform_tolerance: 0.2
@@ -122,13 +122,13 @@ controller_server:
       short_circuit_trajectory_evaluation: true
       stateful: true
       critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
-      BaseObstacle.scale: 0.02
-      PathAlign.scale: 48.0           # Increased from 32.0 for stronger path alignment
-      PathAlign.forward_point_distance: 0.15  # Increased from 0.1
-      GoalAlign.scale: 36.0           # Increased from 24.0 for stronger goal alignment
-      GoalAlign.forward_point_distance: 0.15  # Increased from 0.1
-      PathDist.scale: 32.0
-      GoalDist.scale: 24.0
+      BaseObstacle.scale: 0.6         # Stronger obstacle aversion (was 0.02)
+      PathAlign.scale: 20.0           # Reduced path hugging (was 48.0)
+      PathAlign.forward_point_distance: 0.15
+      GoalAlign.scale: 16.0           # Reduced goal hugging (was 36.0)
+      GoalAlign.forward_point_distance: 0.15
+      PathDist.scale: 18.0            # Reduced path distance priority (was 32.0)
+      GoalDist.scale: 16.0            # Reduced goal distance priority (was 24.0)
       RotateToGoal.scale: 32.0
       RotateToGoal.slowing_factor: 5.0
       RotateToGoal.lookahead_time: -1.0
@@ -136,21 +136,21 @@ controller_server:
 local_costmap:
   local_costmap:
     ros__parameters:
-      update_frequency: 5.0
+      update_frequency: 10.0     # Faster updates for dynamic people (was 5.0)
       publish_frequency: 2.0
       global_frame: odom
       robot_base_frame: base_footprint
       use_sim_time: false
       rolling_window: true
-      width: 3
-      height: 3
+      width: 4                   # Larger window for earlier detours (was 3)
+      height: 4                  # Larger window for earlier detours (was 3)
       resolution: 0.05
       robot_radius: 0.28  # √(0.384² + 0.384²)/2 ≈ 0.2715 m
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
-        inflation_radius: 0.3
+        inflation_radius: 0.4      # Larger personal space (was 0.3)
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: true
@@ -193,7 +193,7 @@ global_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
-        inflation_radius: 0.8
+        inflation_radius: 0.3
 
 planner_server:
   ros__parameters:
@@ -263,15 +263,15 @@ waypoint_follower:
 velocity_smoother:
   ros__parameters:
     use_sim_time: false
-    smoothing_frequency: 20.0
+    smoothing_frequency: 40.0  # Faster smoothing reactions (was 20.0)
     scale_velocities: false
     feedback: "OPEN_LOOP"
     # Velocity limits [vx, vy, wz] - forward-only motion for front-mounted LiDAR
-    max_velocity: [0.5, 0.1, 0.4]   # Limit lateral velocity (was [0.5, 0.5, 0.4])
-    min_velocity: [0.0, -0.1, -0.4] # Forbid reverse motion (was [-0.5, -0.5, -0.4])
+    max_velocity: [0.5, 0.25, 0.8]  # Match controller limits (was [0.5, 0.1, 0.4])
+    min_velocity: [-0.2, -0.25, -0.4] # Allow gentle reverse (was [0.0, -0.1, -0.4])
     max_accel: [0.5, 0.5, 1.5]
     max_decel: [-0.5, -0.5, -1.5]
     odom_topic: "odom"
     odom_duration: 0.1
     deadband_velocity: [0.0, 0.0, 0.0]
-    velocity_timeout: 1.0
+    velocity_timeout: 0.25     # Shorter timeout for faster person response (was 1.0)

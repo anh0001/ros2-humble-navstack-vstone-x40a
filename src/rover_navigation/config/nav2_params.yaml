@@ -89,8 +89,8 @@ controller_server:
     general_goal_checker:
       stateful: true
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.2
-      yaw_goal_tolerance: 0.15
+      xy_goal_tolerance: 0.5
+      yaw_goal_tolerance: 0.35
 
     # DWB Controller - configured for forward-only motion with front-mounted LiDAR
     FollowPath:

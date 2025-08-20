@@ -39,10 +39,8 @@ class WaypointFollower(Node):
         waypoints = []
         
         # Define delivery route: base -> shelf_1 -> station_A -> shelf_2 -> station_B -> base
-        waypoints.append(self.create_pose(2.0, 2.0, 0.0))    # Shelf 1
-        waypoints.append(self.create_pose(3.0, -3.0, -1.57)) # Station A
-        waypoints.append(self.create_pose(-2.0, -2.0, 3.14)) # Shelf 2
-        waypoints.append(self.create_pose(-3.0, 3.0, 1.57))  # Station B
+        waypoints.append(self.create_pose(8.574, -0.18, math.radians(90)))
+        waypoints.append(self.create_pose(5.086, 1.933, math.radians(180)))
         waypoints.append(self.create_pose(0.0, 0.0, 0.0))    # Return to base
 
         self.get_logger().info(f'Starting delivery route with {len(waypoints)} waypoints')

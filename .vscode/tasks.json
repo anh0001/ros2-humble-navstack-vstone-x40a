@@ -146,6 +146,22 @@
             "detail": "Launch navigation with map file (uses default x40a_lab.yaml if no path specified)"
         },
         {
+            "label": "Navigation: Waypoint Following",
+            "type": "shell",
+            "command": "bash",
+            "args": ["-c", "source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 run rover_waypoints waypoint_follower.py"],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "detail": "Launch autonomous waypoint following (requires navigation to be running)"
+        },
+        {
             "label": "RQT: Node Graph",
             "type": "shell",
             "command": "DISPLAY=:1 XAUTHORITY=$HOME/.Xauthority xterm -hold -e \"source /opt/ros/humble/setup.bash && source install/setup.bash && rqt\" &",

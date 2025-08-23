@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import math
+import time
 import rclpy
 from rclpy.node import Node
 from nav2_simple_commander.robot_navigator import BasicNavigator, TaskResult
@@ -34,38 +35,41 @@ class WaypointFollower(Node):
         
         return pose
 
-    def follow_warehouse_route(self):
-        """Follow a predefined warehouse delivery route"""
-        waypoints = []
-        
-        # Define delivery route: base -> shelf_1 -> station_A -> shelf_2 -> station_B -> base
-        waypoints.append(self.create_pose(8.574, -0.18, math.radians(90)))
-        waypoints.append(self.create_pose(5.086, 1.933, math.radians(180)))
-        waypoints.append(self.create_pose(0.0, 0.0, 0.0))    # Return to base
+    def follow_warehouse_route(self, dwell_sec=5.0):
+        """Follow a predefined warehouse delivery route with delays at each waypoint"""
+        waypoints = [
+            self.create_pose(3.385, -3.065, 0.0),
+            self.create_pose(5.344, -3.89, math.radians(90)),
+            self.create_pose(3.0169, 1.043, math.radians(180)),
+            self.create_pose(0.0, 0.0, 0.0),  # Return to base
+        ]
 
         self.get_logger().info(f'Starting delivery route with {len(waypoints)} waypoints')
-        
-        # Follow the waypoints
-        self.navigator.followWaypoints(waypoints)
 
-        # Monitor progress
-        while not self.navigator.isTaskComplete():
-            feedback = self.navigator.getFeedback()
-            if feedback:
-                current_waypoint = feedback.current_waypoint
-                self.get_logger().info(
-                    f'Executing waypoint {current_waypoint + 1} of {len(waypoints)}'
-                )
-            rclpy.spin_once(self, timeout_sec=1.0)
+        for i, pose in enumerate(waypoints, start=1):
+            self.get_logger().info(f'Navigating to waypoint {i}/{len(waypoints)}')
+            self.navigator.goToPose(pose)
 
-        # Check final result
-        result = self.navigator.getResult()
-        if result == TaskResult.SUCCEEDED:
-            self.get_logger().info('Delivery route completed successfully!')
-        elif result == TaskResult.CANCELED:
-            self.get_logger().info('Delivery route was canceled')
-        elif result == TaskResult.FAILED:
-            self.get_logger().error('Delivery route failed!')
+            while not self.navigator.isTaskComplete():
+                feedback = self.navigator.getFeedback()
+                if feedback:
+                    # Optional: log progress
+                    pass
+                rclpy.spin_once(self, timeout_sec=0.2)
+
+            result = self.navigator.getResult()
+            if result == TaskResult.SUCCEEDED:
+                if dwell_sec > 0:
+                    self.get_logger().info(f'Arrived at waypoint {i}. Waiting {dwell_sec} seconds...')
+                    time.sleep(dwell_sec)
+            elif result == TaskResult.CANCELED:
+                self.get_logger().warn(f'Waypoint {i} canceled; aborting route')
+                return
+            else:
+                self.get_logger().error(f'Failed to reach waypoint {i}; aborting route')
+                return
+
+        self.get_logger().info('Delivery route completed successfully!')
 
 def main(args=None):
     rclpy.init(args=args)

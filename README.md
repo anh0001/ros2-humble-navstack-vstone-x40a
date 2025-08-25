@@ -97,20 +97,6 @@ colcon build --symlink-install
 source install/setup.bash
 ```
 
-## Quick Start
-
-### Hardware
-
-```bash
-# Navigation with pre-built map
-ros2 launch rover_navigation rover_navigation.launch.py \
-  use_slam:=false \
-  map:=/path/to/your/map.yaml
-
-# Mapping mode
-ros2 launch rover_navigation rover_navigation.launch.py use_slam:=true
-```
-
 ## Package Structure
 
 ```
@@ -171,6 +157,11 @@ To flash the ESP32 controller firmware on the Vstone X40A rover:
 
 ## Usage Modes
 
+First, source the workspace setup:
+```bash
+source install/setup.bash
+```
+
 ### 1. Mapping (SLAM)
 
 Create maps of new environments:
@@ -183,7 +174,7 @@ ros2 launch rover_navigation rover_navigation.launch.py use_slam:=true
 ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r cmd_vel:=rover_twist
 
 # Save completed map
-ros2 run nav2_map_server map_saver_cli -f ~/maps/warehouse_map
+ros2 run nav2_map_server map_saver_cli -f src/rover_navigation/maps/x40a_lab
 ```
 
 ### 2. Navigation (AMCL)
@@ -191,12 +182,25 @@ ros2 run nav2_map_server map_saver_cli -f ~/maps/warehouse_map
 Navigate using pre-built maps:
 
 ```bash
-# Start localization
-ros2 launch rover_navigation rover_navigation.launch.py \
-  use_slam:=false \
-  map:=~/maps/warehouse_map.yaml
+# Start localization (with default map)
+ros2 launch rover_navigation rover_navigation.launch.py use_slam:=false
 
-# Set initial pose in RViz, then send navigation goals
+# Start localization (with custom map)
+ros2 launch rover_navigation rover_navigation.launch.py use_slam:=false map:=path/to/your/map.yaml
+
+# Set initial pose at origin
+ros2 topic pub /initialpose geometry_msgs/PoseWithCovarianceStamped \
+"header: {frame_id: map}
+pose:
+  pose:
+    position: {x: 0.0, y: 0.0, z: 0.0}
+    orientation: {z: 0.0, w: 1.0}
+  covariance: [0.25, 0, 0, 0, 0, 0,
+               0, 0.25, 0, 0, 0, 0,
+               0, 0, 0.0, 0, 0, 0,
+               0, 0, 0, 0.0, 0, 0,
+               0, 0, 0, 0, 0.0, 0,
+               0, 0, 0, 0, 0, 0.0685]" --once
 ```
 
 ### 3. Autonomous Delivery
@@ -216,7 +220,7 @@ ros2 run rover_waypoints waypoint_follower.py
 Launch RViz for system monitoring:
 
 ```bash
-rviz2 -d rviz/navigation.rviz
+ros2 launch rover_bringup robot_state_display.launch.py
 ```
 
 Key displays:

@@ -51,8 +51,6 @@ sudo apt install \
   ros-humble-gazebo-plugins
 
 # Install additional dependencies
-
-```bash
 sudo apt update
 sudo apt install -y \
   ros-humble-slam-toolbox \
@@ -67,7 +65,6 @@ sudo apt install -y \
   ros-humble-ros2-controllers \
   ros-humble-micro-ros-agent \
   ros-humble-nav2-behavior-tree
-```
 
 # Clone and build workspace
 git clone https://github.com/anh0001/ros2-humble-navstack-vstone-x40a.git

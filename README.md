@@ -2,11 +2,17 @@
 
 ![Ubuntu 22.04](https://img.shields.io/badge/Ubuntu-22.04-orange.svg) ![ROS 2 Humble](https://img.shields.io/badge/ROS%202-Humble-blue.svg)
 
-Production-ready autonomous navigation system for indoor delivery operations.
+Autonomous navigation system for delivery operations in flat surface.
 
 ## Overview
 
-This repository provides a complete ROS 2 Humble navigation stack for the Vstone 4WDS Rover X40A, designed for indoor warehouse delivery applications. The system supports both simulation and hardware deployment with a single-command launch interface.
+This repository provides a complete ROS 2 Humble navigation stack for the Vstone 4WDS Rover X40A, designed for warehouse delivery applications in flat surface.
+
+## Robot Demonstration
+
+![Robot Navigation Demo](docs/imgs/vid_demonstration.gif)
+
+*Vstone X40A rover performing autonomous navigation and waypoint following*
 
 ## Robot Specifications
 
@@ -19,7 +25,6 @@ For comprehensive technical specifications of the Vstone 4WDS Rover X40A platfor
 - **One-command launch** with `use_slam` argument for mapping vs. navigation modes
 - **Production-ready Nav2 configuration** with tuned parameters for X40A
 - **Livox MID-360 LiDAR integration** with 3D point cloud processing
-- **Gazebo simulation** with realistic warehouse environment
 - **Hardware abstraction** supporting both simulation and real robot
 - **Safety features** including collision monitoring and emergency stop
 - **Waypoint following** with automated delivery route capabilities
@@ -65,7 +70,7 @@ sudo apt install -y \
 ```
 
 # Clone and build workspace
-git clone <repository-url> ros2-humble-navstack-vstone-x40a
+git clone https://github.com/anh0001/ros2-humble-navstack-vstone-x40a.git
 cd ros2-humble-navstack-vstone-x40a
 
 # Initialize submodules (required for Vstone packages)
@@ -96,19 +101,6 @@ source install/setup.bash
 ```
 
 ## Quick Start
-
-### Simulation
-
-```bash
-# Terminal 1: Launch Gazebo simulation
-ros2 launch rover_gazebo gazebo_sim.launch.py
-
-# Terminal 2: Launch navigation (mapping mode)
-ros2 launch rover_navigation rover_navigation.launch.py use_sim_time:=true use_slam:=true
-
-# Terminal 3: Run waypoint demo
-ros2 run rover_waypoints waypoint_follower.py
-```
 
 ### Hardware
 
@@ -144,7 +136,7 @@ src/
 The navigation stack is tuned for the X40A's specifications:
 
 - **Safety**: 30cm inflation radius ensures 5cm minimum clearance
-- **Speed**: 0.4 m/s maximum for safe indoor operation
+- **Speed**: 0.4 m/s maximum for safe flat-surface operation
 - **Accuracy**: 8cm goal tolerance meets delivery requirements
 - **Sensor**: Livox MID-360 with ground filtering and 3D→2D projection
 

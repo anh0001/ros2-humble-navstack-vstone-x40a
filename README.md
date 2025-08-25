@@ -281,10 +281,6 @@ Modify `rover_navigation/config/nav2_params.yaml`:
 - Tune `desired_linear_vel` for speed vs. safety balance  
 - Configure `xy_goal_tolerance` for accuracy needs
 
-### Custom Launch Configurations
-
-Create new launch files in `rover_bringup/launch/` for specific deployment scenarios.
-
 ## License
 
 Apache 2.0 - See LICENSE file for details.

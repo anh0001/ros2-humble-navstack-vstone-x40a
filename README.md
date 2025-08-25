@@ -132,7 +132,7 @@ src/
 
 The navigation stack is tuned for the X40A's specifications:
 
-- **Safety**: 30cm inflation radius ensures 5cm minimum clearance
+- **Safety**: 50cm inflation radius ensures safe obstacle avoidance
 - **Speed**: 0.4 m/s maximum for safe flat-surface operation
 - **Accuracy**: 8cm goal tolerance meets delivery requirements
 - **Sensor**: Livox MID-360 with ground filtering and 3D→2D projection
